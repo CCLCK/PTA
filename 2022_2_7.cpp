@@ -127,50 +127,61 @@
 //}
 
 
+
+//class Time
+//{
+//public:
+//	Time(int hour, int minu)
+//	{
+//		this->hour = hour;
+//		this->minu = minu;
+//	}
+//	int operator-(Time t2)//第二个时间
+//	{
+//		if (minu <= t2.minu)
+//		{
+//			int h = t2.hour - hour;
+//			int m = t2.minu - minu;
+//			return h * 60 + m;
+//		}
+//		else
+//		{
+//			int h = t2.hour - hour;
+//			int m = minu - t2.minu;
+//			return h * 60 - m;
+//		}
+//	}
+//private:
+//	int hour;
+//	int minu;
+//};
+
 #include<iostream>
 #include<cstdio>
 #include<cstring>
 using namespace std;
 
-class Time
-{
-public:
-	Time(int hour, int minu)
-	{
-		this->hour = hour;
-		this->minu = minu;
-	}
-	int operator-(Time t2)//第二个时间
-	{
-		if (minu <= t2.minu)
-		{
-			int h = t2.hour - hour;
-			int m = t2.minu - minu;
-			return h * 60 + m;
-		}
-		else
-		{
-			int h = t2.hour - hour;
-			int m = minu - t2.minu;
-			return h * 60 - m;
-		}
-	}
-private:
-	int hour;
-	int minu;
-};
-
 bool op_bo[1005];
 bool op_re[1005];
-int hour[1005];
-char xx[1005];
-int minu[1005];
+int hour_bo[1005];
+int hour_re[1005];
+int minu_bo[1005];
+int minu_re[1005];
+
 int main()
 {
 	int t;
 	cin >> t;
 	for (int i = 0; i < t; i++)
 	{
+	/*	memset(op_bo, 0, 1005);
+		memset(op_re, 0, 1005);
+		memset(hour_bo, 0, 1005);
+		memset(hour_re, 0, 1005);
+		memset(minu_bo, 0, 1005);
+		memset(minu_re, 0, 1005);*/
+		int sum = 0;
+		int cnt = 0;
 		while (1)
 		{
 			int id;
@@ -178,26 +189,58 @@ int main()
 			
 			char tmp;
 			cin >> tmp;
-			if (tmp == 'S')
+			if (tmp == 'S')//借书
 			{
 				op_bo[id] = 1;
+				cin >> hour_bo[id];
+				getchar();
+				cin >> minu_bo[id];
 			}
-			else
+			else if (op_bo[id])//还书且前面有借书记录
+				//这里卡了半天  只有前面有S这里的E才合法 不然就不能更新 比如ES 这种数据就是无效的
 			{
 				op_re[id] = 1;
+				cin >> hour_re[id];
+				getchar();
+				cin >> minu_re[id];
 			}
-			cin >> hour[id];
-			getchar();
-			cin>> minu[id];
+			else//还书但是没有借阅记录
+			{
+				int x, y;
+				cin >> x;
+				getchar();
+				cin >> y;
+			}
+			
+			if (id!=0&&op_bo[id] && op_re[id])
+			{
+				cnt++;					
+				sum += (hour_re[id] * 60 + minu_re[id])-(hour_bo[id] * 60 + minu_bo[id]);
+				op_bo[id] = 0;
+				op_re[id] = 0;
+				hour_re[id] = 0;
+				minu_re[id] = 0;
+				hour_bo[id] = 0;
+				minu_bo[id] = 0;
+			}
 			if (id == 0)
 			{
-				//开始处理
-
+				if (cnt == 0)
+				{
+					printf("0 0\n");
+				}
+				else
+				{
+					printf("%d %d\n", cnt, (int)((sum / (cnt*1.0)) + 0.5));
+				}
+				sum = 0;
+				cnt = 0;
 				break;
 			}
+				
+			
 		}
 	
 	}
-	cout << "success" << endl;
 	return 0;
 }
