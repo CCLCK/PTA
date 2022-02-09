@@ -117,7 +117,7 @@ int main()
 	cin >> rb >> cb;
 	if (ca != rb)
 	{
-		cout << "Error: ca != rb" << endl;
+		printf("Error: %d != %d\n", ca, rb);
 		return 0;
 	}
 	else
@@ -130,8 +130,31 @@ int main()
 			}
 		}
 	}
+	cout << ra << " " << cb << endl;
 	int sum = 0;
-
+	int flag = 1;
+	for (int i = 1; i <= ra; i++)
+	{
+		for (int j = 1; j <= cb; j++)
+		{
+			for (int k = 1; k <= ca; k++)
+			{
+				sum += a[i][k] * b[k][j];
+			}
+			if (flag)
+			{
+				cout << sum;
+				flag = 0;
+			}
+			else
+			{
+				cout << " " << sum;
+			}
+			sum = 0;
+		}
+		cout << endl;
+		flag = 1;
+	}
 	
 	return 0;
 }
