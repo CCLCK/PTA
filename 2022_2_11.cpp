@@ -329,7 +329,7 @@
 //}
 
 
-//64 对字符串的处理 没写来  明天再试试
+//64 对字符串的处理 没写来  等学了string再试试
 //#include<iostream>
 //#include<cstring>
 //#include<cstdio>
@@ -459,14 +459,21 @@
 //	return 0;
 //}
 
+//int main()
+//
+//{
+//	cout << "Talk is cheap. Show me the code." << endl;
+//
+//	return 0;
+//}
 
 #include<iostream>
 using namespace std;
-
 int main()
-
 {
-	cout << "Talk is cheap.Show me the code." << endl;
-
+	int x, y, z;
+	cin >> x >> y >> z;
+	cout << (x*y*z) << endl;
+	//
 	return 0;
 }
